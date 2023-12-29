@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PlayerEntry from './components/PlayerEntry';
 import RoleSelection from './components/RoleSelection';
 import WordDisplay from './components/WordDisplay';
-// ... other imports
+import Game from './components/Game';
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
         <Route path="/" element={<PlayerEntry />} />
         <Route path="/role-selection" element={<RoleSelection />} />
         <Route path="/word-display" element={<WordDisplay />} />
-        {/* ... other routes */}
+        <Route path="/game" element={<Game />} />
       </Routes>
     </Router>
   );
