@@ -1,1 +1,1 @@
-# wordWolf
+# word-wolf
