@@ -21,7 +21,7 @@
   },
   {
     "wolf": "Taxi",
-    "citizens": "Cab"
+    "citizens": "Bus"
   },
   {
     "wolf": "Movie",
@@ -29,10 +29,10 @@
   },
   {
     "wolf": "Glasses",
-    "citizens": "Spectacles"
+    "citizens": "Earrings"
   },
   {
-    "wolf": "Biscuit",
+    "wolf": "Pie",
     "citizens": "Cookie"
   },
   {
@@ -44,24 +44,24 @@
     "citizens": "Sandwich"
   },
   {
-    "wolf": "Chair",
-    "citizens": "Stool"
+    "wolf": "BeefStew",
+    "citizens": "Curry"
   },
   {
-    "wolf": "Sofa",
-    "citizens": "Couch"
+    "wolf": "Chair",
+    "citizens": "Desk"
   },
   {
     "wolf": "Bed",
-    "citizens": "Mattress"
+    "citizens": "Couch"
   },
   {
     "wolf": "Pencil",
     "citizens": "Pen"
   },
   {
-    "wolf": "Book",
-    "citizens": "Magazine"
+    "wolf": "Candle",
+    "citizens": "Flashlight"
   },
   {
     "wolf": "Computer",
@@ -69,11 +69,11 @@
   },
   {
     "wolf": "Phone",
-    "citizens": "Smartphone"
+    "citizens": "Watch"
   },
   {
     "wolf": "Painting",
-    "citizens": "Drawing"
+    "citizens": "Sculpture"
   },
   {
     "wolf": "Guitar",
