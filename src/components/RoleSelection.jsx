@@ -44,6 +44,7 @@ function RoleSelection() {
     navigate('/word-display', { state: { players: updatedPlayers } });
   };
 
+
   return (
     <div>
       <h1>Role Selection</h1>
