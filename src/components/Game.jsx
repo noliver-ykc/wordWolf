@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Typography, Button, Box } from '@mui/material';
+import { Typography, Box, Stack } from '@mui/material';
 import timerUpAudio from '../audio/timerUpAudio.mp3';
 import { ContinueButton, CustomButton } from './CustomButton';
 
 function Game() {
-  const [timeRemaining, setTimeRemaining] = useState(10); // 180 seconds for 3 minutes
+  const [timeRemaining, setTimeRemaining] = useState(180); // 180 seconds for 3 minutes
   const [isTimerActive, setIsTimerActive] = useState(false);
   const [showVoteButton, setShowVoteButton] = useState(false);
   const navigate = useNavigate();
@@ -38,8 +38,21 @@ function Game() {
     return () => clearTimeout(timer);
   }, [timeRemaining, isTimerActive, audio]);
 
-  const startTimer = () => {
+  const toggleTimer = () => {
+    setIsTimerActive(!isTimerActive);
+  };
+
+  const restartTimer = () => {
+    setTimeRemaining(180); // Reset to 3 minutes
     setIsTimerActive(true);
+  };
+
+  const addTime = () => {
+    setTimeRemaining(prevTime => prevTime + 30);
+  };
+
+  const subtractTime = () => {
+    setTimeRemaining(prevTime => Math.max(0, prevTime - 30));
   };
 
   const handleVote = () => {
@@ -54,16 +67,27 @@ function Game() {
 
   return (
     <Box>
-      <Typography variant="h4" gutterBottom>Game In Progress</Typography>
-      <Typography variant="p">Time Remaining:</Typography>
-      <Typography variant="h1">{formatTime(timeRemaining)}</Typography>
-      {!isTimerActive && (
-        <CustomButton onClick={startTimer}>
-          Start Timer
+      <Typography variant="h4" gutterBottom>Discussion Time</Typography>
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 2, my: 2 }}>
+        <Box>
+          <Typography variant="p">Time Remaining:</Typography>
+          <Typography variant="h1">{formatTime(timeRemaining)}</Typography>
+        </Box>
+        <Stack>
+          <CustomButton onClick={addTime}>➕ 30s</CustomButton>
+          <CustomButton onClick={subtractTime}>− 30s</CustomButton>
+        </Stack>
+      </Box>
+      <Box sx={{ my: 2 }}>
+        <CustomButton onClick={toggleTimer}>
+          {isTimerActive ? 'Pause Timer' : 'Start Timer'}
         </CustomButton>
-      )}
+        <CustomButton onClick={restartTimer}>
+          Restart Timer
+        </CustomButton>
+      </Box>
       {showVoteButton && (
-        <ContinueButton onClick={handleVote}>
+        <ContinueButton onClick={handleVote} sx={{ mt: 2 }}>
           Vote ＞
         </ContinueButton>
       )}
