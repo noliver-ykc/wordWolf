@@ -1,45 +1,68 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { TextField, List, ListItem, Container, Typography } from '@mui/material';
+import { CustomButton, ContinueButton } from './CustomButton';
 
 function PlayerEntry() {
   const [players, setPlayers] = useState([]);
   const [playerName, setPlayerName] = useState('');
-  const navigate = useNavigate(); // Used for navigation
+  const navigate = useNavigate();
 
-  // Function to handle the addition of a player
   const handleAddPlayer = () => {
     if (playerName.trim() !== '') {
       setPlayers(prevPlayers => [...prevPlayers, playerName.trim()]);
-      setPlayerName(''); // Clear input field after adding
+      setPlayerName('');
     }
   };
 
-  // Function to handle the submission of the player list
+  const handleAddCPU = () => {
+    setPlayers(prevPlayers => [...prevPlayers, 'CPU']);
+  };
+
   const handleSubmit = () => {
-    if (players.length > 0) {
+    if (players.length >= 3) {
       navigate('/role-selection', { state: { players } });
     } else {
-      alert("Please add at least one player.");
+      alert("Please add at least 3 players.");
     }
   };
 
   return (
-    <div>
-      <h1>Player Entry</h1>
-      <input
-        type="text"
+    <Container>
+      <Typography variant="h4" gutterBottom>Add Players</Typography>
+      <TextField
+        label="Enter player name"
+        variant="outlined"
         value={playerName}
         onChange={(e) => setPlayerName(e.target.value)}
-        placeholder="Enter player name"
+        fullWidth
+        margin="normal"
       />
-      <button onClick={handleAddPlayer}>Add Player</button>
-      <ul>
+      <CustomButton onClick={handleAddPlayer} style={{ marginBottom: '20px' }}>
+        ➕ Add Player
+      </CustomButton>
+
+      {players.length > 0 && (
+        <Typography variant="h6" style={{ marginBottom: '10px' }}>
+          {players.length} Player{players.length > 1 ? 's' : ''}
+        </Typography>
+      )}
+
+      <List>
         {players.map((player, index) => (
-          <li key={index}>{player}</li>
+          <ListItem key={index}>{player}</ListItem>
         ))}
-      </ul>
-      <button onClick={handleSubmit}>Continue to Role Selection</button>
-    </div>
+      </List>
+      <CustomButton onClick={handleAddCPU}>
+      ➕ ADD CPU
+      </CustomButton>
+      <Typography variant="subtitle1" sx={{ color: 'grey', mb: 2 }}>
+        *CPU is chosen as wolf or citizen at random
+      </Typography>
+      <ContinueButton onClick={handleSubmit}>
+        Role Selection ＞
+      </ContinueButton>
+    </Container>
   );
 }
 

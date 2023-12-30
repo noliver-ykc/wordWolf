@@ -12,12 +12,20 @@
     "citizens": "Pond"
   },
   {
+    "wolf": "Lawyer",
+    "citizens": "Doctor"
+  },
+  {
     "wolf": "Muffin",
     "citizens": "Cupcake"
   },
   {
     "wolf": "Laptop",
     "citizens": "Notebook"
+  },
+  {
+    "wolf": "Actor",
+    "citizens": "Singer"
   },
   {
     "wolf": "Taxi",
@@ -78,5 +86,9 @@
   {
     "wolf": "Guitar",
     "citizens": "Violin"
+  },
+  {
+    "wolf": "Movie",
+    "citizens": "Play"
   }
 ]

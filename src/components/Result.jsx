@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { Typography, Button, Checkbox, FormControlLabel, Box, FormGroup, Divider } from '@mui/material';
+import { ContinueButton, CustomButton } from './CustomButton';
 
 function Result() {
   const location = useLocation();
@@ -9,11 +11,10 @@ function Result() {
   const [selectedPlayers, setSelectedPlayers] = useState([]);
   const [gameOutcome, setGameOutcome] = useState(null);
   const [showPlayerInfo, setShowPlayerInfo] = useState(false);
-  const [showNewGameButton, setShowNewGameButton] = useState(false); // State for showing New Game button
+  const [showVoteSection, setShowVoteSection] = useState(true); // control the vote section display
+  const [showNewGameButton, setShowNewGameButton] = useState(false);
 
-  if (!players) {
-    return <div>Error: No player data available.</div>;
-  }
+
 
   const handleCheckboxChange = (e) => {
     const playerName = e.target.value;
@@ -31,72 +32,78 @@ function Result() {
       players.some((player) => player.name === selectedPlayerName && player.role === 'wolf')
     );
 
-    if (wolvesVoted) {
+    if (!wolvesVoted) {
       setGameOutcome('Wolves Win!');
     } else {
       setGameOutcome('Citizens Win!');
     }
-    setShowPlayerInfo(true); // Reveal player info after vote is submitted
-    setShowNewGameButton(true); // Show New Game button
+    setShowPlayerInfo(true);
+    setShowVoteSection(false); // Hide the vote section after vote is submitted
+    setShowNewGameButton(true);
   };
 
   const handleNewGameClick = () => {
     navigate('/'); // Navigate to the root path
   };
-
+  if (!players) {
+    return <>
+      <Typography>Error: No player data available.</Typography>
+        <ContinueButton onClick={handleNewGameClick}>
+          New Game ＞
+        </ContinueButton>
+    </>
+  }
   return (
-    <div>
-      <h1>Game Result</h1>
-      <form>
-        <h2>Vote for the Wolf/Wolves</h2>
-        <p>Select Wolf/Wolves:</p>
-        <ul>
-          {players.map((player, index) => (
-            <li key={index}>
-              <label>
-                <input
-                  type="checkbox"
-                  value={player.name}
-                  onChange={handleCheckboxChange}
-                  checked={selectedPlayers.includes(player.name)}
-                />
-                {player.name}
-              </label>
-            </li>
-          ))}
-        </ul>
-        <button type="button" onClick={handleVoteSubmit}>
-          Submit Vote
-        </button>
-      </form>
+    <Box>
+      {showVoteSection && (
+        <Box component="form">
+          <Typography variant="h4" gutterBottom>Time to Vote!</Typography>
+          <FormGroup sx={{ mb: 2 }}>
+            {players.map((player, index) => (
+              <FormControlLabel
+                key={index}
+                control={
+                  <Checkbox
+                    value={player.name}
+                    onChange={handleCheckboxChange}
+                    checked={selectedPlayers.includes(player.name)}
+                  />
+                }
+                label={player.name}
+              />
+            ))}
+          </FormGroup>
+          <CustomButton onClick={handleVoteSubmit}>
+            Submit Vote
+          </CustomButton>
+        </Box>
+      )}
 
-      {gameOutcome && <p>{gameOutcome}</p>}
+      {gameOutcome && <Typography variant="h3">{gameOutcome}</Typography>}
 
       {showPlayerInfo && (
-      <div>
-        <h2>Player Information</h2>
-        <ul>
+        <Box>
           {players.map((player, index) => (
-            <li key={index}>
-              <strong>Name:</strong> {player.name}<br />
-              <strong>Role:</strong>
-              <span style={{ color: player.role === 'wolf' ? 'red' : 'black' }}>
-                 {player.role}
-              </span>
-              <br />
-              <strong>Guess:</strong> {player.guess}<br />
-              <strong>Word:</strong> {player.word}
-            </li>
-          ))}
-        </ul>
-      </div>
-)}
+            <Box key={index} sx={{ color: player.role === 'wolf' ? 'red' : 'green' }}>
+              <Typography>
+                <strong>{player.role} : {player.name}</strong>
+                <span>
 
+                </span>
+              </Typography>
+              <Typography><strong>Word:</strong> {player.word}</Typography>
+              <Divider light />
+            </Box>
+          ))}
+        </Box>
+      )}
 
       {showNewGameButton && (
-        <button onClick={handleNewGameClick}>New Game</button>
+        <ContinueButton onClick={handleNewGameClick}>
+          New Game ＞
+        </ContinueButton>
       )}
-    </div>
+    </Box>
   );
 }
 
