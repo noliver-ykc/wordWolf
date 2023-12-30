@@ -14,6 +14,10 @@ function Result() {
   const [showVoteSection, setShowVoteSection] = useState(true); // control the vote section display
   const [showNewGameButton, setShowNewGameButton] = useState(false);
 
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
+
 
 
   const handleCheckboxChange = (e) => {
@@ -84,14 +88,11 @@ function Result() {
       {showPlayerInfo && (
         <Box>
           {players.map((player, index) => (
-            <Box key={index} sx={{ color: player.role === 'wolf' ? 'red' : 'green' }}>
+            <Box key={index} sx={{ mt: 1, color: player.role === 'wolf' ? 'red' : 'green' }}>
               <Typography>
-                <strong>{player.role} : {player.name}</strong>
-                <span>
-
-                </span>
+                <strong>{capitalizeFirstLetter(player.role)} : {player.name}</strong>
               </Typography>
-              <Typography><strong>Word:</strong> {player.word}</Typography>
+              <Typography sx={{mb: 1}} ><strong>Word: {player.word}</strong> </Typography>
               <Divider light />
             </Box>
           ))}
@@ -99,7 +100,7 @@ function Result() {
       )}
 
       {showNewGameButton && (
-        <ContinueButton onClick={handleNewGameClick}>
+        <ContinueButton sx={{ mt: 3}} onClick={handleNewGameClick}>
           New Game ＞
         </ContinueButton>
       )}

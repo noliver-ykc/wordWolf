@@ -5,6 +5,7 @@ import { CustomButton, ContinueButton } from './CustomButton';
 
 function WordDisplay() {
   const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
+  const [wordRevealed, setWordRevealed] = useState(false);
   const [players, setPlayers] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
@@ -16,9 +17,11 @@ function WordDisplay() {
   }, [location.state]);
 
   useEffect(() => {
-    // Automatically skip CPU players
+    // Automatically skip CPU players and reset wordRevealed for the next player
     if (players[currentPlayerIndex]?.name === 'CPU') {
       handleNextPlayer();
+    } else {
+      setWordRevealed(false);  // Reset word reveal for non-CPU players
     }
   }, [currentPlayerIndex, players]);
 
@@ -30,6 +33,10 @@ function WordDisplay() {
     }
   };
 
+  const revealWord = () => {
+    setWordRevealed(true);
+  };
+
   return (
     <Box>
       {players[currentPlayerIndex]?.name !== 'CPU' && (
@@ -37,9 +44,18 @@ function WordDisplay() {
           <Typography variant="h4">
             Word for {players[currentPlayerIndex]?.name}
           </Typography>
-          <CustomButton onClick={handleNextPlayer} style={{ marginBottom: '20px' }}>
-            Reveal Word
-          </CustomButton>
+          {wordRevealed ? (
+            <Box>
+              <Typography variant="h5">{players[currentPlayerIndex]?.word}</Typography>
+              <ContinueButton onClick={handleNextPlayer} sx={{ mt: 2 }}>
+                Next Player ＞
+              </ContinueButton>
+            </Box>
+          ) : (
+            <CustomButton onClick={revealWord} sx={{ mt: 2 }}>
+              Reveal Word
+            </CustomButton>
+          )}
         </>
       )}
     </Box>

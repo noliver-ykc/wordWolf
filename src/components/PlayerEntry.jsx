@@ -57,7 +57,7 @@ function PlayerEntry() {
       ➕ ADD CPU
       </CustomButton>
       <Typography variant="subtitle1" sx={{ color: 'grey', mb: 2 }}>
-        *CPU is chosen as wolf or citizen at random
+        *CPU is chosen as wolf or citizen at random. Recommended for 3 players or more.
       </Typography>
       <ContinueButton onClick={handleSubmit}>
         Role Selection ＞
