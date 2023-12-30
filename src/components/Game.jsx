@@ -1,13 +1,16 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { Typography, Button, Box } from '@mui/material';
 import timerUpAudio from '../audio/timerUpAudio.mp3';
+import { ContinueButton, CustomButton } from './CustomButton';
 
 function Game() {
-  const [timeRemaining, setTimeRemaining] = useState(180); // 180 seconds for 3 minutes
+  const [timeRemaining, setTimeRemaining] = useState(10); // 180 seconds for 3 minutes
+  const [isTimerActive, setIsTimerActive] = useState(false);
   const [showVoteButton, setShowVoteButton] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const players = location.state?.players; // Access players from location state
+  const players = location.state?.players;
 
   const audio = useMemo(() => new Audio(timerUpAudio), []);
 
@@ -18,13 +21,12 @@ function Game() {
   };
 
   useEffect(() => {
-    if (timeRemaining > 0) {
-      const timer = setTimeout(() => {
+    let timer;
+    if (isTimerActive && timeRemaining > 0) {
+      timer = setTimeout(() => {
         setTimeRemaining(timeRemaining - 1);
       }, 1000);
-
-      return () => clearTimeout(timer);
-    } else {
+    } else if (timeRemaining === 0) {
       audio.play().then(() => {
         setShowVoteButton(true);
       }).catch(err => {
@@ -32,12 +34,17 @@ function Game() {
         setShowVoteButton(true);
       });
     }
-  }, [timeRemaining, audio]);
+
+    return () => clearTimeout(timer);
+  }, [timeRemaining, isTimerActive, audio]);
+
+  const startTimer = () => {
+    setIsTimerActive(true);
+  };
 
   const handleVote = () => {
     if (!players) {
       console.error("No players data available");
-      // Handle error appropriately
       return;
     }
 
@@ -46,15 +53,21 @@ function Game() {
   };
 
   return (
-    <div>
-      <h1>Game In Progress</h1>
-      {timeRemaining > 0 ? (
-        <p>Time Remaining: {formatTime(timeRemaining)}</p>
-      ) : (
-        showVoteButton && <button onClick={handleVote}>Vote</button>
+    <Box>
+      <Typography variant="h4" gutterBottom>Game In Progress</Typography>
+      <Typography variant="p">Time Remaining:</Typography>
+      <Typography variant="h1">{formatTime(timeRemaining)}</Typography>
+      {!isTimerActive && (
+        <CustomButton onClick={startTimer}>
+          Start Timer
+        </CustomButton>
       )}
-      {/* Additional content can be added here */}
-    </div>
+      {showVoteButton && (
+        <ContinueButton onClick={handleVote}>
+          Vote ＞
+        </ContinueButton>
+      )}
+    </Box>
   );
 }
 
