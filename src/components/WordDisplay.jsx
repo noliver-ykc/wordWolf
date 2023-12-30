@@ -17,11 +17,11 @@ function WordDisplay() {
   }, [location.state]);
 
   useEffect(() => {
-    // Automatically skip CPU players and reset wordRevealed for the next player
-    if (players[currentPlayerIndex]?.name === 'CPU') {
+    // Automatically skip PlayerBot players and reset wordRevealed for the next player
+    if (players[currentPlayerIndex]?.name === 'PlayerBot') {
       handleNextPlayer();
     } else {
-      setWordRevealed(false);  // Reset word reveal for non-CPU players
+      setWordRevealed(false);  // Reset word reveal for non-PlayerBot players
     }
   }, [currentPlayerIndex, players]);
 
@@ -39,7 +39,7 @@ function WordDisplay() {
 
   return (
     <Box>
-      {players[currentPlayerIndex]?.name !== 'CPU' && (
+      {players[currentPlayerIndex]?.name !== 'PlayerBot' && (
         <>
           <Typography variant="h4">
             Word for {players[currentPlayerIndex]?.name}

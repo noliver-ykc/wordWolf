@@ -15,8 +15,8 @@ function PlayerEntry() {
     }
   };
 
-  const handleAddCPU = () => {
-    setPlayers(prevPlayers => [...prevPlayers, 'CPU']);
+  const handleAddPlayerBot = () => {
+    setPlayers(prevPlayers => [...prevPlayers, 'PlayerBot']);
   };
 
   const handleSubmit = () => {
@@ -53,11 +53,11 @@ function PlayerEntry() {
           <ListItem key={index}>{player}</ListItem>
         ))}
       </List>
-      <CustomButton onClick={handleAddCPU}>
-      ➕ ADD CPU
+      <CustomButton onClick={handleAddPlayerBot}>
+      ➕ ADD PlayerBot
       </CustomButton>
       <Typography variant="subtitle1" sx={{ color: 'grey', mb: 2 }}>
-        *CPU is chosen as wolf or citizen at random. Recommended for 3 players or more.
+        *PlayerBot is chosen as wolf or citizen at random. Recommended for 3 players or more.
       </Typography>
       <ContinueButton onClick={handleSubmit}>
         Role Selection ＞
