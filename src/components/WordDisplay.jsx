@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Typography, Box } from '@mui/material';
 import { CustomButton, ContinueButton } from './CustomButton';
@@ -16,6 +16,14 @@ function WordDisplay() {
     }
   }, [location.state]);
 
+  const handleNextPlayer = useCallback(() => {
+    if (currentPlayerIndex < players.length - 1) {
+      setCurrentPlayerIndex(currentPlayerIndex + 1);
+    } else {
+      navigate('/game', { state: { players } });
+    }
+  }, [currentPlayerIndex, players, navigate]);
+
   useEffect(() => {
     // Automatically skip PlayerBot players and reset wordRevealed for the next player
     if (players[currentPlayerIndex]?.name === 'PlayerBot') {
@@ -23,15 +31,7 @@ function WordDisplay() {
     } else {
       setWordRevealed(false);  // Reset word reveal for non-PlayerBot players
     }
-  }, [currentPlayerIndex, players]);
-
-  const handleNextPlayer = () => {
-    if (currentPlayerIndex < players.length - 1) {
-      setCurrentPlayerIndex(currentPlayerIndex + 1);
-    } else {
-      navigate('/game', { state: { players } });
-    }
-  };
+  }, [currentPlayerIndex, players, handleNextPlayer]);
 
   const revealWord = () => {
     setWordRevealed(true);
