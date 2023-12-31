@@ -53,12 +53,17 @@ function PlayerEntry() {
           <ListItem key={index}>{player}</ListItem>
         ))}
       </List>
+      <Typography variant="subtitle1" sx={{ color: 'grey', mb: 2 }}>
+        *Game play requires 3 players or more.
+      </Typography>
       <CustomButton onClick={handleAddPlayerBot}>
       ➕ ADD PlayerBot
       </CustomButton>
-      <Typography variant="subtitle1" sx={{ color: 'grey', mb: 2 }}>
-        *PlayerBot is chosen as wolf or citizen at random. Recommended for 3 players or more.
+
+      <Typography variant="subtitle1" sx={{ color: 'grey', mt: 2, mb: 2 }}>
+        *PlayerBot is chosen as wolf or citizen at random.
       </Typography>
+
       <ContinueButton onClick={handleSubmit}>
         Role Selection ＞
       </ContinueButton>
