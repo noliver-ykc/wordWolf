@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Typography, Button, Checkbox, FormControlLabel, Box, FormGroup, Divider } from '@mui/material';
+import { Typography, Checkbox, FormControlLabel, Box, FormGroup, Divider } from '@mui/material';
 import { ContinueButton, CustomButton } from './CustomButton';
 
 function Result() {
